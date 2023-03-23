@@ -39,14 +39,14 @@ export const getLogin = (data?: object) => {
   return http.request<any>("post", baseUrlApi("login"), { data });
 };
 
-// /** mock刷新token */
-// export const refreshTokenApi = (data?: object) => {
-//   return http.request<RefreshTokenResult>("post", "/refreshToken", { data });
-// };
-
-/** 后端刷新token */
+/** mock刷新token */
 export const refreshTokenApi = (data?: object) => {
-  return http.request<RefreshTokenResult>("post", baseUrlApi("refreshToken"), {
-    data
-  });
+  return http.request<RefreshTokenResult>("post", "/refreshToken", { data });
 };
+
+// /** 后端刷新token */
+// export const refreshTokenApi = (data?: object) => {
+//   return http.request<RefreshTokenResult>("post", baseUrlApi("refreshToken"), {
+//     data
+//   });
+// };

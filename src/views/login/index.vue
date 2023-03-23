@@ -33,19 +33,24 @@ dataThemeChange();
 const { title } = useNav();
 
 const ruleForm = reactive({
-  username: "admin",
-  password: "admin123"
+  username: null,
+  password: null
 });
 
 const onLogin = async (formEl: FormInstance | undefined) => {
   loading.value = true;
+  console.log("ruleForm", ruleForm);
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
       useUserStoreHook()
-        .loginByUsername({ username: ruleForm.username, password: "admin123" })
+        .loginByUsername({
+          username: ruleForm.username,
+          password: ruleForm.password
+        })
         .then(res => {
           if (res.success) {
+            console.log("前端登录成功");
             // 获取后端路由
             initRouter().then(() => {
               router.push("/");
