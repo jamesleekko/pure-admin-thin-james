@@ -1,17 +1,27 @@
 export default {
   path: "/article",
+  redirect: "/article/list",
   meta: {
-    title: "文章列表",
-    icon: "article"
+    title: "文章",
+    icon: "article",
+    rank: 1
   },
   children: [
     {
       path: "/article/list",
-      name: "Article",
-      component: () => import("@/views/article/index.vue"),
+      name: "ArticleList",
+      component: () => import("@/views/article/list.vue"),
       meta: {
         title: "文章列表"
       }
+    },
+    {
+      path: "/article/edit",
+      name: "ArticleEdit",
+      component: () => import("@/views/article/edit.vue"),
+      meta: {
+        title: "编辑文章"
+      }
     }
   ]
-};
+} as RouteConfigsTable;

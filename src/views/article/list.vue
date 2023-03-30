@@ -3,7 +3,7 @@ import { PureTable } from "@pureadmin/table";
 import { ref } from "vue";
 
 defineOptions({
-  name: "Article"
+  name: "ArticleList"
 });
 
 const columns = ref([
@@ -18,15 +18,15 @@ const columns = ref([
     width: 200
   },
   {
-    label: "值",
-    prop: "value"
+    label: "分类",
+    prop: "category"
   }
 ]);
 
 const dataList = ref([
   {
-    title: "标题1",
-    value: 333
+    title: "测试文章",
+    category: 1
   }
 ]);
 </script>

@@ -12,6 +12,7 @@ import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { ref, reactive, toRaw, onMounted, onBeforeUnmount } from "vue";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 import { initRouter } from "@/router/utils";
+import { initGlobalData } from "@/store/utils";
 
 import dayIcon from "@/assets/svg/day.svg?component";
 import darkIcon from "@/assets/svg/dark.svg?component";
@@ -50,12 +51,13 @@ const onLogin = async (formEl: FormInstance | undefined) => {
         })
         .then(res => {
           if (res.success) {
-            console.log("前端登录成功");
             // 获取后端路由
             initRouter().then(() => {
               router.push("/");
               message("登录成功", { type: "success" });
             });
+            // 数据准备(文章分类、标签等)
+            initGlobalData();
           }
         });
     } else {

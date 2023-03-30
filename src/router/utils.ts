@@ -161,6 +161,7 @@ function addPathMatch() {
 
 /** 处理动态路由（后端返回的路由） */
 function handleAsyncRoutes(routeList) {
+  console.log("routesList", routeList);
   if (routeList.length === 0) {
     usePermissionStoreHook().handleWholeMenus(routeList);
   } else {
@@ -236,6 +237,7 @@ function formatFlatteningRoutes(routesList: RouteRecordRaw[]) {
         .concat(hierarchyList[i].children, hierarchyList.slice(i + 1));
     }
   }
+  console.log("flatten", hierarchyList);
   return hierarchyList;
 }
 
@@ -318,6 +320,7 @@ function addAsyncRoutes(arrRoutes: Array<RouteRecordRaw>) {
       addAsyncRoutes(v.children);
     }
   });
+  console.log("arrRoutes", arrRoutes);
   return arrRoutes;
 }
 
