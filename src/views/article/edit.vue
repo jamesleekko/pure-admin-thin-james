@@ -1,20 +1,12 @@
 <script setup ts>
-import { ref, reactive } from "vue";
+import { reactive } from "vue";
+import { useArticleStoreHook } from "@/store/modules/article";
 
 defineOptions({
   name: "ArticleEdit"
 });
 
-const categories = ref([
-  {
-    id: 1,
-    name: "分类1"
-  },
-  {
-    id: 2,
-    name: "分类2"
-  }
-]);
+const categories = useArticleStoreHook().getCategories;
 
 const form = reactive({
   title: "",

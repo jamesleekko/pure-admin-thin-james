@@ -18,6 +18,11 @@ export const useUserStore = defineStore({
     // 页面级别权限
     roles: storageSession().getItem<DataInfo<number>>(sessionKey)?.roles ?? []
   }),
+  getters: {
+    getUserName() {
+      return this.username;
+    }
+  },
   actions: {
     /** 存储用户名 */
     SET_USERNAME(username: string) {

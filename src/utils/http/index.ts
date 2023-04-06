@@ -78,6 +78,7 @@ class PureHttp {
           ? config
           : new Promise(resolve => {
               const data = getToken();
+              const username = useUserStoreHook().getUserName;
               if (data) {
                 const now = new Date().getTime();
                 const expired = parseInt(data.expires) - now <= 0;
@@ -86,7 +87,11 @@ class PureHttp {
                     PureHttp.isRefreshing = true;
                     // token过期刷新
                     useUserStoreHook()
-                      .handRefreshToken({ refreshToken: data.refreshToken })
+                      .handRefreshToken({
+                        token: data.accessToken,
+                        refreshToken: data.refreshToken,
+                        username: username
+                      })
                       .then(res => {
                         const token = res.data.accessToken;
                         config.headers["Authorization"] = formatToken(token);

@@ -40,3 +40,7 @@ export type userType = {
   username?: string;
   roles?: Array<string>;
 };
+
+export type cateType = {
+  categories: Array<object>;
+};
