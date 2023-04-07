@@ -4,7 +4,7 @@ import { useRouter } from "vue-router";
 import { message } from "@/utils/message";
 import { loginRules } from "./utils/rule";
 import { useNav } from "@/layout/hooks/useNav";
-import type { FormInstance } from "element-plus";
+import { ElMessage, FormInstance } from "element-plus";
 import { useLayout } from "@/layout/hooks/useLayout";
 import { useUserStoreHook } from "@/store/modules/user";
 import { bg, avatar, illustration } from "./utils/static";
@@ -59,6 +59,10 @@ const onLogin = async (formEl: FormInstance | undefined) => {
             // 数据准备(文章分类、标签等)
             initGlobalData();
           }
+        })
+        .catch(res => {
+          ElMessage.error(res.data.message);
+          loading.value = false;
         });
     } else {
       loading.value = false;

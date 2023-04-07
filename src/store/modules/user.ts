@@ -8,6 +8,7 @@ import { getLogin, refreshTokenApi } from "@/api/user";
 import { UserResult, RefreshTokenResult } from "@/api/user";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { type DataInfo, setToken, removeToken, sessionKey } from "@/utils/auth";
+// import { reset } from "@/api/utils";
 
 export const useUserStore = defineStore({
   id: "pure-user",
@@ -37,9 +38,11 @@ export const useUserStore = defineStore({
       return new Promise<UserResult>((resolve, reject) => {
         getLogin(data)
           .then(data => {
-            if (data) {
+            if (data.success) {
               setToken(data.data);
               resolve(data);
+            } else {
+              reject(data);
             }
           })
           .catch(error => {
