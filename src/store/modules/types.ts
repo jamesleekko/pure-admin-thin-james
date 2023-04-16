@@ -44,3 +44,7 @@ export type userType = {
 export type cateType = {
   categories: Array<object>;
 };
+
+export type imageType = {
+  imageTypes: Array<object>;
+};

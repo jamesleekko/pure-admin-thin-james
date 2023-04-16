@@ -21,7 +21,7 @@ const form = reactive({
       <el-input v-model="form.title" />
     </el-form-item>
     <el-form-item label="分类">
-      <el-select v-model="form.region" placeholder="please select your zone">
+      <el-select v-model="form.category" placeholder="请选择">
         <el-option
           v-for="item in categories"
           :key="item.id"

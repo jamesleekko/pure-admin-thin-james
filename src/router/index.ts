@@ -4,6 +4,7 @@ import NProgress from "@/utils/progress";
 import { sessionKey, type DataInfo } from "@/utils/auth";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { usePermissionStoreHook } from "@/store/modules/permission";
+import { initGlobalData } from "@/store/utils";
 import {
   Router,
   createRouter,
@@ -154,6 +155,8 @@ router.beforeEach((to: toRouteType, _from, next) => {
               });
             }
           }
+          // 数据准备(文章分类、标签等)
+          initGlobalData();
           router.push(to.fullPath);
         });
       }
