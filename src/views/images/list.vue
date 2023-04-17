@@ -1,10 +1,14 @@
 <script setup ts>
 import { PureTable } from "@pureadmin/table";
 import { ref } from "vue";
+import { useImageStoreHook } from "./modules/image";
 
 defineOptions({
   name: "ImageList"
 });
+
+const store = useImageStoreHook();
+const types = store.getImageTypes;
 
 const columns = ref([
   {
@@ -14,13 +18,20 @@ const columns = ref([
   },
   {
     label: "标题",
-    prop: "title",
+    prop: "name",
     width: 200
   },
   {
     label: "分类",
-    prop: "category"
-  }
+    prop: "type",
+    formatter: typeFormatter
+  },
+  {
+    label: "url",
+    prop: "src"
+  },
+  { label: "时间", prop: "time" },
+  { label: "操作", prop: "action" }
 ]);
 
 const dataList = ref([
@@ -29,10 +40,19 @@ const dataList = ref([
     category: 1
   }
 ]);
+
+const typeFormatter = (row: any) => {
+  const type = types.find(item => item.id === row.type);
+  return type ? type.name : "";
+};
 </script>
 
 <template>
   <div>
-    <PureTable :columns="columns" :data="dataList" />
+    <PureTable
+      :columns="columns"
+      :data="dataList"
+      :default-sort="{ prop: 'time', order: 'descending' }"
+    />
   </div>
 </template>

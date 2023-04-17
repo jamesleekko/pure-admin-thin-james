@@ -9,3 +9,7 @@ type Result = {
 export const getImageTypes = () => {
   return http.request<Result>("get", baseUrlApi("getImageTypes"));
 };
+
+export const updateImg = (data?: object) => {
+  return http.request<Result>("post", baseUrlApi("updateImg"), { data });
+};
