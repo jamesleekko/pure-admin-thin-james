@@ -5,6 +5,7 @@ import { ElMessage } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
 import type { UploadProps, FormInstance, FormRules } from "element-plus";
 import { updateImg } from "@/api/image";
+import moment from "moment";
 
 defineOptions({
   name: "ArticleEdit"
@@ -74,7 +75,8 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
       updateImg({
         title: form.title,
         imageType: form.imageType,
-        imageUrl: form.imageUrl
+        imageUrl: form.imageUrl,
+        time: moment().format("YYYY:MM:DD HH:mm:ss")
       }).then(function (res) {
         console.log(res);
       });

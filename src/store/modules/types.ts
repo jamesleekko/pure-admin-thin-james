@@ -48,3 +48,11 @@ export type cateType = {
 export type imageType = {
   imageTypes: Array<object>;
 };
+
+export type imageItemType = {
+  id: number;
+  name: string;
+  type: number;
+  time: string;
+  src: string;
+};

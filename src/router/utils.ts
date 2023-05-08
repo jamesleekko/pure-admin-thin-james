@@ -236,7 +236,6 @@ function formatFlatteningRoutes(routesList: RouteRecordRaw[]) {
         .concat(hierarchyList[i].children, hierarchyList.slice(i + 1));
     }
   }
-  console.log("flatten", hierarchyList);
   return hierarchyList;
 }
 
