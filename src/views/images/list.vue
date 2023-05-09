@@ -6,6 +6,7 @@ import type { imageItemType } from "@/store/modules//types";
 // import moment from "moment";
 import { getImageList, deleteImage } from "@/api/image";
 import { ElMessage, ElMessageBox, ElTable } from "element-plus";
+import { useRouter } from "vue-router";
 
 defineOptions({
   name: "ImageList"
@@ -25,9 +26,16 @@ const search = () => {
 };
 search();
 
+const router = useRouter();
 const handleEdit = (index: number, row: imageItemType) => {
-  console.log(index, row);
+  router.push({
+    name: "ImageEdit",
+    query: {
+      ...row
+    }
+  });
 };
+
 const handleDelete = (index: number, row: imageItemType) => {
   //根据row.id提示是否删除
   ElMessageBox.confirm("此操作将永久删除该图片, 是否继续?", "提示", {

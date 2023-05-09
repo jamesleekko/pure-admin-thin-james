@@ -1,29 +1,32 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { useImageStoreHook } from "@/store/modules/image";
 import { ElMessage } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
 import type { UploadProps, FormInstance, FormRules } from "element-plus";
 import { updateImg } from "@/api/image";
 import moment from "moment";
+import { useRoute } from "vue-router";
 
 defineOptions({
   name: "ArticleEdit"
 });
-
+const route = useRoute();
 const imageTypes = useImageStoreHook().getImageTypes;
-
 const ruleFormRef = ref<FormInstance>();
 const form = reactive({
+  id: null,
   title: "",
-  imageType: "",
+  imageType: 3,
   imageUrl: ""
 });
+const uploader = ref<any>(null);
 
 const handleUploadSuccess: UploadProps["onSuccess"] = (
   response,
   uploadFile
 ) => {
+  console.log("upload success", uploadFile);
   form.imageUrl = URL.createObjectURL(uploadFile.raw!);
 };
 
@@ -85,6 +88,15 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
     }
   });
 };
+
+onMounted(() => {
+  if (route.query.id != undefined) {
+    form.id = route.query.id;
+    form.title = route.query.name as string;
+    form.imageType = route.query.type as unknown as number;
+    form.imageUrl = route.query.src as string;
+  }
+});
 </script>
 
 <template>
@@ -110,6 +122,7 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
         :before-upload="beforeUpload"
         :action="'/api/upload'"
         :data="{ file_type: 'resource' }"
+        ref="uploader"
       >
         <img v-if="form.imageUrl" :src="form.imageUrl" />
         <el-icon v-else class="img-upload-icon"><Plus /></el-icon
