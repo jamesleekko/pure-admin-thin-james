@@ -78,7 +78,7 @@ const typeFormatter = (row: articleType) => {
         width="180"
         :formatter="typeFormatter"
       />
-      <el-table-column label="时间" prop="time" width="300" />
+      <el-table-column label="时间" prop="time" />
       <el-table-column label="操作" width="140">
         <template #default="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)"

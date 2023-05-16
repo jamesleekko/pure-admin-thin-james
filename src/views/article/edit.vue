@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, ref } from "vue";
 import { useArticleStoreHook } from "@/store/modules/article";
 import { getArticleContent, updateArticle } from "@/api/article";
 import { useRoute, useRouter } from "vue-router";
+import moment from "moment";
+import { ElMessage, FormInstance, FormRules } from "element-plus";
 
 defineOptions({
   name: "ArticleEdit"
@@ -46,13 +48,38 @@ const form = reactive({
   content: ""
 });
 
+const onSubmit = async (formEl: FormInstance) => {
+  if (!formEl) return;
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      console.log("submit!");
+      updateArticle({
+        id: form.id,
+        title: form.title,
+        type: form.type,
+        content: form.content,
+        time: moment().format("YYYY:MM:DD HH:mm:ss")
+      }).then(function (res) {
+        if (res.success) {
+          ElMessage.success(res.data.message);
+          router.push({ name: "ImageList" });
+        } else {
+          ElMessage.error(res.errmsg);
+        }
+      });
+    } else {
+      console.log("error submit!!", fields);
+    }
+  });
+};
+
 onMounted(() => {
   if (route.query.id != undefined) {
     form.id = route.query.id;
     form.title = route.query.name as string;
     form.type = route.query.type as unknown as number;
 
-    getArticleContent(route.query.id).then(function (res) {
+    getArticleContent(route.query.id as unknown as number).then(function (res) {
       if (res.success) {
         form.id = res.data.id;
         form.title = res.data.title as string;
@@ -67,18 +94,22 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-form :model="form" label-width="80px">
+  <el-form :model="form" label-width="80px" ref="ruleFormRef" :rules="rules">
     <el-form-item label="标题">
       <el-input v-model="form.title" />
     </el-form-item>
     <el-form-item label="分类">
-      <el-select v-model="form.category" placeholder="请选择">
+      <el-select v-model="form.type" placeholder="请选择">
         <el-option
           v-for="item in categories"
           :key="item.id"
           :label="item.name"
           :value="item.id"
         />
-      </el-select> </el-form-item
-  ></el-form>
+      </el-select>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="onSubmit(ruleFormRef)">确定</el-button>
+    </el-form-item></el-form
+  >
 </template>
