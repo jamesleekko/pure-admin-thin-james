@@ -16,20 +16,11 @@ export default {
       }
     },
     {
-      path: "/article/new",
-      name: "ArticleNew",
-      component: () => import("@/views/article/edit.vue"),
-      meta: {
-        title: "新建文章"
-      }
-    },
-    {
       path: "/article/edit",
       name: "ArticleEdit",
       component: () => import("@/views/article/edit.vue"),
       meta: {
-        title: "编辑文章",
-        showLink: false
+        title: "编辑文章"
       }
     }
   ]

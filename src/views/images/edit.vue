@@ -6,12 +6,14 @@ import { Plus } from "@element-plus/icons-vue";
 import type { UploadProps, FormInstance, FormRules } from "element-plus";
 import { updateImg } from "@/api/image";
 import moment from "moment";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 defineOptions({
-  name: "ArticleEdit"
+  name: "ImageEdit"
 });
+
 const route = useRoute();
+const router = useRouter();
 const imageTypes = useImageStoreHook().getImageTypes;
 const ruleFormRef = ref<FormInstance>();
 const form = reactive({
@@ -26,8 +28,8 @@ const handleUploadSuccess: UploadProps["onSuccess"] = (
   response,
   uploadFile
 ) => {
-  console.log("upload success", uploadFile);
-  form.imageUrl = URL.createObjectURL(uploadFile.raw!);
+  console.log("upload success", uploadFile, response);
+  form.imageUrl = response.data.fileList[0].fileurl;
 };
 
 const allowedImageTypes = ["image/jpeg", "image/png", "image/jpg"];
@@ -69,19 +71,24 @@ const rules = reactive<FormRules>({
   ]
 });
 
-const onSubmit = async (formEl: FormInstance | undefined) => {
-  console.log(formEl);
+const onSubmit = async (formEl: FormInstance) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
       console.log("submit!");
       updateImg({
+        id: form.id,
         title: form.title,
         imageType: form.imageType,
         imageUrl: form.imageUrl,
         time: moment().format("YYYY:MM:DD HH:mm:ss")
       }).then(function (res) {
-        console.log(res);
+        if (res.success) {
+          ElMessage.success(res.data.message);
+          router.push({ name: "ImageList" });
+        } else {
+          ElMessage.error(res.errmsg);
+        }
       });
     } else {
       console.log("error submit!!", fields);

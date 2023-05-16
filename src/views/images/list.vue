@@ -2,7 +2,7 @@
 import { ref, reactive } from "vue";
 import { useImageStoreHook } from "@/store/modules/image";
 // import type { UploadProps, FormInstance, FormRules } from "element-plus";
-import type { imageItemType } from "@/store/modules//types";
+import type { imageItemType } from "@/store/modules/types";
 // import moment from "moment";
 import { getImageList, deleteImage } from "@/api/image";
 import { ElMessage, ElMessageBox, ElTable } from "element-plus";
@@ -15,6 +15,7 @@ defineOptions({
 const store = useImageStoreHook();
 const types = store.getImageTypes;
 const searchParams = reactive({});
+const dataList = ref([]);
 const search = () => {
   getImageList(searchParams).then(res => {
     if (res.success) {
@@ -62,14 +63,6 @@ const typeFormatter = (row: imageItemType) => {
   const type = types.find(item => item.id === row.type);
   return type ? type.name : "";
 };
-
-const dataList = ref([
-  {
-    name: "测试图片",
-    type: 3,
-    src: "https://picsum.photos/200/300"
-  }
-]);
 </script>
 
 <template>

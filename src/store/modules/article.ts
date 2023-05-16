@@ -14,7 +14,6 @@ export const useArticleStore = defineStore({
   },
   actions: {
     SET_CATEGORIES(data) {
-      // eslint-disable-next-line no-prototype-builtins
       this.categories = data;
     }
   }

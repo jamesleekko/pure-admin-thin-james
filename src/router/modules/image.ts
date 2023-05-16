@@ -3,7 +3,7 @@ export default {
   redirect: "/image/list",
   meta: {
     title: "图片",
-    icon: "image",
+    icon: "gallery",
     rank: 1
   },
   children: [
@@ -16,20 +16,11 @@ export default {
       }
     },
     {
-      path: "/image/new",
-      name: "ImageNew",
-      component: () => import("@/views/images/edit.vue"),
-      meta: {
-        title: "新增图片"
-      }
-    },
-    {
       path: "/image/edit",
       name: "ImageEdit",
       component: () => import("@/views/images/edit.vue"),
       meta: {
-        title: "编辑图片",
-        showLink: false
+        title: "编辑图片"
       }
     }
   ]

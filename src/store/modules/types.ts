@@ -56,3 +56,11 @@ export type imageItemType = {
   time: string;
   src: string;
 };
+
+export type articleType = {
+  id: number;
+  name: string;
+  type: number;
+  time: string;
+  content: string;
+};

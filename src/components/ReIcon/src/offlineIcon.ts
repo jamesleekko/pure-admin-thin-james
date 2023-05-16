@@ -9,8 +9,10 @@ import HomeFilled from "@iconify-icons/ep/home-filled";
 import InformationLine from "@iconify-icons/ri/information-line";
 import Lollipop from "@iconify-icons/ep/lollipop";
 import Article from "@iconify-icons/ri/article-line";
+import Gallery from "@iconify-icons/ri/gallery-line";
 
 addIcon("homeFilled", HomeFilled);
 addIcon("informationLine", InformationLine);
 addIcon("lollipop", Lollipop);
 addIcon("article", Article);
+addIcon("gallery", Gallery);
