@@ -19,7 +19,7 @@ export const getArticleList = (params?: object) => {
 };
 
 export const getArticleContent = (id: number) => {
-  return http.request<any>("post", baseUrlApi("getArticleContent"), {
+  return http.request<any>("post", baseUrlApi("articleContent"), {
     params: { id }
   });
 };

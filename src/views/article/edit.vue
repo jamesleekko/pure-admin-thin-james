@@ -44,7 +44,7 @@ const rules = reactive<FormRules>({
 const form = reactive({
   id: null,
   title: "",
-  type: 1,
+  type: categories[0],
   content: ""
 });
 
@@ -52,7 +52,6 @@ const onSubmit = async (formEl: FormInstance) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log("submit!");
       updateArticle({
         id: form.id,
         title: form.title,
@@ -62,7 +61,7 @@ const onSubmit = async (formEl: FormInstance) => {
       }).then(function (res) {
         if (res.success) {
           ElMessage.success(res.data.message);
-          router.push({ name: "ImageList" });
+          router.push({ name: "ArticleList" });
         } else {
           ElMessage.error(res.errmsg);
         }
@@ -81,10 +80,10 @@ onMounted(() => {
 
     getArticleContent(route.query.id as unknown as number).then(function (res) {
       if (res.success) {
-        form.id = res.data.id;
-        form.title = res.data.title as string;
-        form.type = res.data.type as unknown as number;
-        form.content = res.data.content as string;
+        form.id = res.data[0].id;
+        form.title = res.data[0].title as string;
+        form.type = res.data[0].type as unknown as number;
+        form.content = res.data[0].content as string;
       } else {
         ElMessage.error(res.errmsg);
       }
@@ -107,6 +106,9 @@ onMounted(() => {
           :value="item.id"
         />
       </el-select>
+    </el-form-item>
+    <el-form-item label="内容">
+      <v-md-editor v-model="form.content" height="800px" />
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit(ruleFormRef)">确定</el-button>

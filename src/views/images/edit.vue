@@ -19,7 +19,7 @@ const ruleFormRef = ref<FormInstance>();
 const form = reactive({
   id: null,
   title: "",
-  imageType: 3,
+  imageType: imageTypes[2],
   imageUrl: ""
 });
 const uploader = ref<any>(null);

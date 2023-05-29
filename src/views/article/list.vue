@@ -71,7 +71,7 @@ const typeFormatter = (row: articleType) => {
     >
       <el-table-column type="selection" label="ID" width="55" />
       <el-table-column label="id" prop="id" width="80" />
-      <el-table-column label="标题" prop="name" width="200" />
+      <el-table-column label="标题" prop="title" width="200" />
       <el-table-column
         label="分类"
         prop="type"
