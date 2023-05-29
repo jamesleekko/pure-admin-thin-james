@@ -19,7 +19,7 @@ const ruleFormRef = ref<FormInstance>();
 const form = reactive({
   id: null,
   title: "",
-  imageType: imageTypes[2],
+  imageType: null,
   imageUrl: ""
 });
 const uploader = ref<any>(null);
@@ -97,6 +97,7 @@ const onSubmit = async (formEl: FormInstance) => {
 };
 
 onMounted(() => {
+  form.imageType = imageTypes[2].id;
   if (route.query.id != undefined) {
     form.id = route.query.id;
     form.title = route.query.name as string;

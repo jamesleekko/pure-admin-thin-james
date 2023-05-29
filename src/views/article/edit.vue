@@ -44,7 +44,7 @@ const rules = reactive<FormRules>({
 const form = reactive({
   id: null,
   title: "",
-  type: categories[0],
+  type: null,
   content: ""
 });
 
@@ -73,11 +73,9 @@ const onSubmit = async (formEl: FormInstance) => {
 };
 
 onMounted(() => {
-  if (route.query.id != undefined) {
-    form.id = route.query.id;
-    form.title = route.query.name as string;
-    form.type = route.query.type as unknown as number;
+  form.type = categories[0].id;
 
+  if (route.query.id != undefined) {
     getArticleContent(route.query.id as unknown as number).then(function (res) {
       if (res.success) {
         form.id = res.data[0].id;
