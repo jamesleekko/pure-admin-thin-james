@@ -14,8 +14,13 @@ defineOptions({
 
 const store = useImageStoreHook();
 const types = store.getImageTypes;
-const searchParams = reactive({});
+const typeOptions = [
+  { label: "全部类型", value: null },
+  ...types.map(item => ({ label: item.name, value: item.id }))
+];
+const searchParams = reactive({ type: null, name: null });
 const dataList = ref([]);
+const selects = ref([]);
 const search = () => {
   getImageList(searchParams).then(res => {
     if (res.success) {
@@ -37,18 +42,26 @@ const handleEdit = (index: number, row: imageItemType) => {
   });
 };
 
-const handleDelete = (index: number, row: imageItemType) => {
+const handleSelectionChange = (rows: any) => {
+  selects.value = rows;
+};
+
+const handleDelete = (rows: any) => {
   //根据row.id提示是否删除
-  ElMessageBox.confirm("此操作将永久删除该图片, 是否继续?", "提示", {
+  ElMessageBox.confirm("此操作将永久删除选中图片, 是否继续?", "提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
     type: "warning"
   })
     .then(() => {
-      deleteImage(row.id).then(res => {
+      const idList: number[] = [];
+      rows.forEach(item => {
+        idList.push(item.id);
+      });
+      deleteImage(idList).then(res => {
         if (res.success) {
           ElMessage.success("删除成功");
-          dataList.value.splice(index, 1);
+          search();
         } else {
           ElMessage.error("删除失败");
         }
@@ -67,9 +80,27 @@ const typeFormatter = (row: imageItemType) => {
 
 <template>
   <div>
+    <div class="mb-2">
+      <el-button type="default" @click="handleDelete(selects)">删除</el-button>
+      <el-select
+        class="ml-2"
+        v-model="searchParams.type"
+        placeholder="请选择类型"
+        style="width: 200px"
+        @change="search"
+      >
+        <el-option
+          v-for="item in typeOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </div>
     <el-table
       :data="dataList"
       :default-sort="{ prop: 'time', order: 'descending' }"
+      @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" label="ID" width="55" />
       <el-table-column label="id" prop="id" width="80" />
@@ -90,7 +121,7 @@ const typeFormatter = (row: imageItemType) => {
           <el-button
             size="small"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)"
+            @click="handleDelete([scope.row])"
             >删除</el-button
           >
         </template>

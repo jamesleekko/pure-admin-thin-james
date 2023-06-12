@@ -106,7 +106,7 @@ onMounted(() => {
         form.id = res.data[0].id;
         form.title = res.data[0].title as string;
         form.type = res.data[0].type as unknown as number;
-        if (form.tags.length > 0) {
+        if (res.data[0].tags > 0) {
           form.tags = res.data[0].tags.split(",") as string[];
         }
         form.content = res.data[0].content as string;

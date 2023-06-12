@@ -24,8 +24,8 @@ export const getArticleContent = (id: number) => {
   });
 };
 
-export const deleteArticle = (id: number) => {
+export const deleteArticle = (idList: number[]) => {
   return http.request<any>("delete", baseUrlApi("deleteArticle"), {
-    params: { id }
+    params: { idList }
   });
 };

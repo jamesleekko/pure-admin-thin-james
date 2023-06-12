@@ -13,8 +13,8 @@ export const getImageList = (params?: object) => {
   return http.request<any>("post", baseUrlApi("imageList"), { params });
 };
 
-export const deleteImage = (id: number) => {
+export const deleteImage = (idList: number[]) => {
   return http.request<any>("delete", baseUrlApi("deleteImage"), {
-    params: { id }
+    params: { idList }
   });
 };
