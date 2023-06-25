@@ -18,11 +18,13 @@ const typeOptions = [
 ];
 const searchParams = reactive({ type: null, name: null });
 const dataList = ref([]);
+const dataTotal = ref(0);
 const selects = ref([]);
 const search = () => {
   getArticleList(searchParams).then(res => {
     if (res.success) {
-      dataList.value = res.data;
+      dataList.value = res.data.list;
+      dataTotal.value = res.data.total;
     } else {
       ElMessage.error("列表获取失败");
     }

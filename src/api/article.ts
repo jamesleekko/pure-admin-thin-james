@@ -15,7 +15,7 @@ export const updateArticle = (data?: object) => {
 };
 
 export const getArticleList = (params?: object) => {
-  return http.request<any>("post", baseUrlApi("articleList"), { params });
+  return http.request<any>("get", baseUrlApi("articleList"), { params });
 };
 
 export const getArticleContent = (id: number) => {
