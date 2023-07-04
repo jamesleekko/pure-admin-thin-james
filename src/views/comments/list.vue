@@ -65,11 +65,14 @@ const handleDelete = (rows: any) => {
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" label="ID" width="55" />
-      <el-table-column label="id" prop="id" width="80" />
-      <el-table-column label="用户名" prop="name" width="200" />
-      <el-table-column label="邮箱" prop="email" />
-      <el-table-column label="站点" prop="site" />
-      <el-table-column label="操作" width="60">
+      <el-table-column label="id" prop="id" width="60" />
+      <el-table-column label="用户名" prop="name" width="160" />
+      <el-table-column label="邮箱" prop="email" width="240" />
+      <el-table-column label="站点" prop="site" width="200" />
+      <el-table-column label="内容" prop="content" width="700" />
+      <el-table-column label="mainId" prop="mainId" />
+      <el-table-column label="replyId" prop="replyId" />
+      <el-table-column label="操作" width="80">
         <template #default="scope">
           <el-button
             size="small"
