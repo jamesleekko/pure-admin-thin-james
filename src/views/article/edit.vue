@@ -115,6 +115,38 @@ onMounted(() => {
       }
     });
   }
+
+  //监听v-md-editor的粘贴事件，如果是图片则先上传获取url
+  // const editor = document.querySelector(".v-md-editor");
+  // editor?.addEventListener("paste", function (e) {
+  //   const clipboardData = e.clipboardData;
+  //   if (clipboardData) {
+  //     const items = clipboardData.items;
+  //     if (items) {
+  //       for (let i = 0; i < items.length; i++) {
+  //         if (items[i].kind === "file") {
+  //           const blob = items[i].getAsFile();
+  //           if (blob) {
+  //             const formData = new FormData();
+  //             formData.append("file", blob);
+  //             //上传图片
+  //             // uploadImage(formData).then(function (res) {
+  //             //   if (res.success) {
+  //             //     const data = res.data;
+  //             //     const url = data.url;
+  //             //     const name = data.name;
+  //             //     const image = `![${name}](${url})`;
+  //             //     editor.value = editor.value + image;
+  //             //   } else {
+  //             //     ElMessage.error(res.errmsg);
+  //             //   }
+  //             // });
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // });
 });
 </script>
 
