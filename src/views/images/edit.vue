@@ -75,7 +75,6 @@ const onSubmit = async (formEl: FormInstance) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log("submit!");
       updateImg({
         id: form.id,
         title: form.title,

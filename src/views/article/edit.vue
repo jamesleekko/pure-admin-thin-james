@@ -5,6 +5,7 @@ import { getArticleContent, updateArticle } from "@/api/article";
 import { useRoute, useRouter } from "vue-router";
 import moment from "moment";
 import { ElMessage, FormInstance, FormRules, ElInput } from "element-plus";
+import { uploadFile } from "@/api/image";
 
 defineOptions({
   name: "ArticleEdit"
@@ -14,6 +15,7 @@ const route = useRoute();
 const router = useRouter();
 const categories = useArticleStoreHook().getCategories;
 const ruleFormRef = ref<FormInstance>();
+const md = ref<any>(null);
 
 const rules = reactive<FormRules>({
   title: [
@@ -97,6 +99,18 @@ const onSubmit = async (formEl: FormInstance) => {
   });
 };
 
+const uploadImg = (pos, file) => {
+  if (file.size / 1024 / 1024 > 2) {
+    ElMessage.error("图片不能大于2MB!");
+    return false;
+  }
+  uploadFile([file], "article-image").then(function (res) {
+    if (res.success) {
+      md.value.$img2Url(pos, res.data.fileList[0].fileurl);
+    }
+  });
+};
+
 onMounted(() => {
   form.type = categories[0].id;
 
@@ -115,38 +129,6 @@ onMounted(() => {
       }
     });
   }
-
-  //监听v-md-editor的粘贴事件，如果是图片则先上传获取url
-  // const editor = document.querySelector(".v-md-editor");
-  // editor?.addEventListener("paste", function (e) {
-  //   const clipboardData = e.clipboardData;
-  //   if (clipboardData) {
-  //     const items = clipboardData.items;
-  //     if (items) {
-  //       for (let i = 0; i < items.length; i++) {
-  //         if (items[i].kind === "file") {
-  //           const blob = items[i].getAsFile();
-  //           if (blob) {
-  //             const formData = new FormData();
-  //             formData.append("file", blob);
-  //             //上传图片
-  //             // uploadImage(formData).then(function (res) {
-  //             //   if (res.success) {
-  //             //     const data = res.data;
-  //             //     const url = data.url;
-  //             //     const name = data.name;
-  //             //     const image = `![${name}](${url})`;
-  //             //     editor.value = editor.value + image;
-  //             //   } else {
-  //             //     ElMessage.error(res.errmsg);
-  //             //   }
-  //             // });
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // });
 });
 </script>
 
@@ -194,7 +176,12 @@ onMounted(() => {
       </el-button>
     </el-form-item>
     <el-form-item label="内容">
-      <v-md-editor v-model="form.content" height="800px" />
+      <mavon-editor
+        ref="md"
+        @imgAdd="uploadImg"
+        v-model="form.content"
+        class="w-full h-[800px]"
+      />
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit(ruleFormRef)">确定</el-button>

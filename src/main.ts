@@ -14,6 +14,9 @@ import vuepressTheme from "@kangc/v-md-editor/lib/theme/vuepress.js";
 import "@kangc/v-md-editor/lib/theme/style/vuepress.css";
 import Prism from "prismjs";
 
+import mavonEditor from "mavon-editor";
+import "mavon-editor/dist/css/index.css";
+
 // import Table from "@pureadmin/table";
 // import PureDescriptions from "@pureadmin/descriptions";
 
@@ -61,6 +64,7 @@ getServerConfig(app).then(async config => {
   setupStore(app);
   app.use(MotionPlugin).use(ElementPlus);
   app.use(VueMarkdownEditor);
+  app.use(mavonEditor);
   // .use(useEcharts);
   // .use(Table);
   // .use(PureDescriptions);

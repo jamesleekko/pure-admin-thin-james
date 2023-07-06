@@ -43,6 +43,7 @@
     "element-plus": "^2.2.32",
     "element-resize-detector": "^1.2.4",
     "js-cookie": "^3.0.1",
+    "mavon-editor": "^3.0.1",
     "mitt": "^3.0.0",
     "mockjs": "^1.1.0",
     "moment": "^2.29.4",
