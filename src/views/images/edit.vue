@@ -32,11 +32,16 @@ const handleUploadSuccess: UploadProps["onSuccess"] = (
   form.imageUrl = response.data.fileList[0].fileurl;
 };
 
-const allowedImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+const allowedImageTypes = [
+  "image/jpeg",
+  "image/png",
+  "image/jpg",
+  "image/svg+xml"
+];
 
 const beforeUpload: UploadProps["beforeUpload"] = rawFile => {
   if (!allowedImageTypes.includes(rawFile.type)) {
-    ElMessage.error("图片需为jpg, jpeg, png格式!");
+    ElMessage.error("图片需为jpg, jpeg, png, svg格式!");
     return false;
   } else if (rawFile.size / 1024 / 1024 > 2) {
     ElMessage.error("图片不能大于2MB!");
