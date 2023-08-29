@@ -7,7 +7,14 @@ defineOptions({
   name: "ArticleList"
 });
 
-const searchParams = reactive({ type: null, name: null });
+const pageSize = ref(99999);
+const currentPage = ref(1);
+const searchParams = reactive({
+  page: currentPage,
+  size: pageSize,
+  type: null,
+  name: null
+});
 const dataList = ref([]);
 const dataTotal = ref(0);
 const selects = ref([]);

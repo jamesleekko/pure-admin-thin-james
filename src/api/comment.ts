@@ -6,7 +6,7 @@ export const getCommentList = (params?: object) => {
 };
 
 export const deleteComment = (idList: number[]) => {
-  return http.request<any>("delete", baseUrlApi("deleteArticle"), {
+  return http.request<any>("delete", baseUrlApi("deleteComment"), {
     params: { idList }
   });
 };
