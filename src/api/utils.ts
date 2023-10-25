@@ -9,7 +9,7 @@ import { storageLocal, storageSession, toggleClass } from "@pureadmin/utils";
 export const baseUrlApi = (url: string) =>
   process.env.NODE_ENV === "development"
     ? `/api/${url}`
-    : `http://124.221.75.170:3000/${url}`;
+    : `http://localhost:3000/${url}`;
 
 /** 清空缓存并返回登录页 */
 export function reset() {
