@@ -4,7 +4,8 @@ import { useArticleStoreHook } from "@/store/modules/article";
 import type { articleType } from "@/store/modules/types";
 import { useRouter } from "vue-router";
 import { getArticleList, deleteArticle } from "@/api/article";
-import { ElMessage, ElMessageBox, ElTable } from "element-plus";
+import { ElMessage, ElMessageBox, ElTable, ElTag } from "element-plus";
+import moment from "moment";
 
 defineOptions({
   name: "ArticleList"
@@ -111,7 +112,26 @@ const typeFormatter = (row: articleType) => {
         width="180"
         :formatter="typeFormatter"
       />
-      <el-table-column label="时间" prop="time" />
+      <el-table-column label="tags" prop="tags">
+        <template #default="scope">
+          <el-tag
+            v-for="tag in typeof scope.row.tags === 'string'
+              ? scope.row.tags.length > 0
+                ? scope.row.tags.split(',')
+                : []
+              : []"
+            :key="tag"
+            class="mr-2"
+          >
+            {{ tag }}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="修改时间">
+        <template #default="scope">
+          {{ moment(scope.row.time).format("YYYY-MM-DD HH:mm:ss") }}
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="140">
         <template #default="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
